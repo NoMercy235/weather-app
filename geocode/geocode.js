@@ -1,0 +1,44 @@
+const request = require('request');
+const env = require('../env');
+
+function onRequestFinished(err, response, body, resolve, reject) {
+    if (err) {
+        handleError(err, reject);
+        reject(err);
+        return;
+    } else if (!body.results.length) {
+        handleNoResults(reject);
+        return;
+    }
+    // console.log(JSON.stringify(body.results, null, 4));
+    resolve({
+        formattedAddress: body.results[0].formatted_address,
+        lat: body.results[0].geometry.location.lat,
+        lng: body.results[0].geometry.location.lng,
+    });
+}
+
+function handleError(err, reject) {
+    reject(err);
+}
+
+function handleNoResults(reject) {
+    reject('No results found');
+}
+
+function geocodeAddress(address) {
+    const encodedAddress = encodeURIComponent(address);
+    const reqOpts = {
+        url: `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${env.googleApiKey}`,
+        json: true,
+    };
+    return new Promise((resolve, reject) => {
+        request(reqOpts, (err, response, body) => {
+            onRequestFinished(err, response, body, resolve, reject);
+        });
+    });
+}
+
+module.exports = {
+    geocodeAddress: geocodeAddress
+};
