@@ -21,7 +21,7 @@ function weatherForCity(geocodeData) {
     // const encodedCity = encodeURIComponent(city);
     const reqOpts = {
         // url: `http://api.openweathermap.org/data/2.5/weather?q=${encodedCity}&APPID=${env.forecastApiKey}`,
-        url: `http://api.openweathermap.org/data/2.5/weather?lat=${geocodeData.lat}&lon=${geocodeData.lng}&APPID=${env.forecastApiKey}`,
+        url: `http://api.openweathermap.org/data/2.5/weather?lat=${geocodeData.lat}&lon=${geocodeData.lng}&units=metric&APPID=${env.forecastApiKey}`,
         json: true,
     };
     return new Promise((resolve, reject) => {
