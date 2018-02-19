@@ -1,4 +1,11 @@
 const yargs = require('yargs');
+const fs = require('fs');
+
+if (!fs.existsSync('env.js')) {
+    console.error('Environment file not detected. Please create "./env.js".');
+    process.exit(1)
+}
+
 const geocode = require('./geocode/geocode');
 const weather = require('./weather/weather');
 const argv = yargs
@@ -20,8 +27,8 @@ geocode.geocodeAddress(argv.address)
         weather.weatherForCity(geocodeData).then((data) => {
             console.log(JSON.stringify(data, null, 4));
         }).catch((err) => {
-            console.log(err);
+            console.error(err);
         });
     }).catch((err) => {
-        console.log(err);
+        console.error(err);
     });
