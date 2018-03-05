@@ -1,5 +1,4 @@
 const request = require('request');
-const cities = require('../cities/cities');
 const env = require('../env');
 
 function onRequestFinished(err, response, body, resolve, reject) {
@@ -16,11 +15,7 @@ function handleError(err, reject) {
 }
 
 function weatherForCity(geocodeData) {
-    // const city = cities[geocodeData]
-    // if ()
-    // const encodedCity = encodeURIComponent(city);
     const reqOpts = {
-        // url: `http://api.openweathermap.org/data/2.5/weather?q=${encodedCity}&APPID=${env.forecastApiKey}`,
         url: `http://api.openweathermap.org/data/2.5/weather?lat=${geocodeData.lat}&lon=${geocodeData.lng}&units=metric&APPID=${env.forecastApiKey}`,
         json: true,
     };
