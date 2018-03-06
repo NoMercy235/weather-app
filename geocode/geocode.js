@@ -9,7 +9,6 @@ function onRequestFinished(err, response, body, resolve, reject) {
         handleNoResults(reject);
         return;
     }
-    // console.log(JSON.stringify(body.results, null, 4));
     resolve({
         formattedAddress: body.results[0].formatted_address,
         lat: body.results[0].geometry.location.lat,

@@ -34,24 +34,28 @@ if (runningAsScript) {
         .argv;
 }
 
+function handlerError(err) {
+    if (runningAsScript) {
+        console.error(err);
+    } else {
+        throw err;
+    }
+}
+
 function getWeatherForAddress(address, keys) {
     return geocode.geocodeAddress(address, keys.googleApiKey)
         .then((geocodeData) => {
-            console.log(JSON.stringify(geocodeData, null, 4));
+            if (runningAsScript) console.log(JSON.stringify(geocodeData, null, 4));
             return weather.weatherForCity(geocodeData, keys.forecastApiKey).then((data) => {
-                console.log(JSON.stringify(data, null, 4));
+                if (runningAsScript) console.log(JSON.stringify(data, null, 4));
                 const result = {
                     geocode: geocodeData,
                     weather: data,
                 };
                 process.send && process.send(result);
                 return result;
-            }).catch((err) => {
-                console.error(err);
-            });
-        }).catch((err) => {
-        console.error(err);
-    });
+            }).catch(handlerError);
+        }).catch(handlerError);
 }
 
 if (runningAsScript) {
