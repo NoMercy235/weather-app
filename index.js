@@ -26,6 +26,10 @@ geocode.geocodeAddress(argv.address)
         console.log(JSON.stringify(geocodeData, null, 4));
         weather.weatherForCity(geocodeData).then((data) => {
             console.log(JSON.stringify(data, null, 4));
+            process.send({
+                geocode: geocodeData,
+                weather: data,
+            });
         }).catch((err) => {
             console.error(err);
         });
