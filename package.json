@@ -1,5 +1,5 @@
 {
-  "name": "weather-app",
+  "name": "@nomercy235/weather-app",
   "version": "1.0.0",
   "description": "A simple app which gives the weather for a location.",
   "main": "index.js",
@@ -11,5 +11,22 @@
   "dependencies": {
     "request": "^2.73.0",
     "yargs": "^4.8.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NoMercy235/weather-app.git"
+  },
+  "keywords": [
+    "weather",
+    "nodejs",
+    "geocode"
+  ],
+  "bugs": {
+    "url": "https://github.com/NoMercy235/weather-app/issues"
+  },
+  "homepage": "https://github.com/NoMercy235/weather-app#readme",
+  "engines": {
+    "node": ">=4.2.4"
   }
 }
