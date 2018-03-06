@@ -1,6 +1,6 @@
 {
   "name": "@nomercy235/weather-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple app which gives the weather for a location.",
   "main": "index.js",
   "scripts": {
