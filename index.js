@@ -34,16 +34,18 @@ if (runningAsScript) {
         .argv;
 }
 
-function getWeatherForCity(keys) {
-    geocode.geocodeAddress(argv.address, keys.googleApiKey)
+function getWeatherForAddress(address, keys) {
+    return geocode.geocodeAddress(address, keys.googleApiKey)
         .then((geocodeData) => {
             console.log(JSON.stringify(geocodeData, null, 4));
-            weather.weatherForCity(geocodeData, keys.forecastApiKey).then((data) => {
+            return weather.weatherForCity(geocodeData, keys.forecastApiKey).then((data) => {
                 console.log(JSON.stringify(data, null, 4));
-                process.send && process.send({
+                const result = {
                     geocode: geocodeData,
                     weather: data,
-                });
+                };
+                process.send && process.send(result);
+                return result;
             }).catch((err) => {
                 console.error(err);
             });
@@ -53,14 +55,15 @@ function getWeatherForCity(keys) {
 }
 
 if (runningAsScript) {
-    getWeatherForCity({
+    keys = {
         googleApiKey: env.googleApiKey,
         forecastApiKey: env.forecastApiKey,
-    });
+    };
+    getWeatherForAddress(argv.address, keys);
 }
 
 module.exports = {
     geocode: geocode,
     weather: weather,
-    getWeatherForCity: getWeatherForCity
+    getWeatherForAddress: getWeatherForAddress
 };
