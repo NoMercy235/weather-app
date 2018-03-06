@@ -1,6 +1,4 @@
 const request = require('request');
-const cities = require('../cities/cities');
-const env = require('../env');
 
 function onRequestFinished(err, response, body, resolve, reject) {
     if (err) {
@@ -15,13 +13,9 @@ function handleError(err, reject) {
     reject(err);
 }
 
-function weatherForCity(geocodeData) {
-    // const city = cities[geocodeData]
-    // if ()
-    // const encodedCity = encodeURIComponent(city);
+function weatherForCity(geocodeData, forecastApiKey) {
     const reqOpts = {
-        // url: `http://api.openweathermap.org/data/2.5/weather?q=${encodedCity}&APPID=${env.forecastApiKey}`,
-        url: `http://api.openweathermap.org/data/2.5/weather?lat=${geocodeData.lat}&lon=${geocodeData.lng}&units=metric&APPID=${env.forecastApiKey}`,
+        url: `http://api.openweathermap.org/data/2.5/weather?lat=${geocodeData.lat}&lon=${geocodeData.lng}&units=metric&APPID=${forecastApiKey}`,
         json: true,
     };
     return new Promise((resolve, reject) => {

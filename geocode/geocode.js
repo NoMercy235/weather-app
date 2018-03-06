@@ -1,5 +1,4 @@
 const request = require('request');
-const env = require('../env');
 
 function onRequestFinished(err, response, body, resolve, reject) {
     if (err) {
@@ -26,10 +25,10 @@ function handleNoResults(reject) {
     reject('No results found');
 }
 
-function geocodeAddress(address) {
+function geocodeAddress(address, googleApiKey) {
     const encodedAddress = encodeURIComponent(address);
     const reqOpts = {
-        url: `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${env.googleApiKey}`,
+        url: `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${googleApiKey}`,
         json: true,
     };
     return new Promise((resolve, reject) => {
