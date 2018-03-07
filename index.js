@@ -1,11 +1,11 @@
 const fs = require('fs');
 const geocode = require('./geocode/geocode');
 const weather = require('./weather/weather');
-const runningAsScript = !module.parent;
 
 // To be used if this is ran as a script;
 let yargs;
 let env;
+let runningAsScript = !module.parent;
 
 if (runningAsScript) {
     if (!fs.existsSync('env.js')) {
@@ -27,11 +27,19 @@ if (runningAsScript) {
                 demand: true,
                 describe: 'Address for which you request the weather.',
                 string: true,
+            },
+            script: {
+                alias: 'n',
+                demand: false,
+                describe: 'Overwrite the runningAsScript value.',
+                default: true
             }
         })
         .help()
         .alias('help', 'h')
+        .boolean('script')
         .argv;
+    runningAsScript = argv.script;
 }
 
 function handlerError(err) {
