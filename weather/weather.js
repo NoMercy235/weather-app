@@ -1,33 +1,12 @@
 const request = require('request');
-const moment = require('moment');
-
-function getDaysForecast(objects) {
-    let results = [];
-    const dateExists = (date) => {
-        return results.findIndex((res) => {
-            return res.date.startOf('day').isSame(date.startOf('day'));
-        });
-    };
-
-    objects.forEach((obj) => {
-        let date = moment.unix(obj.dt);
-        const dateIndex = dateExists(date);
-        if (dateIndex === -1) {
-            results.push({date: date, values: [obj]});
-        } else {
-            results[dateIndex].values.push(obj);
-        }
-    });
-
-    return results;
-}
+const Utils = require('./utils');
 
 function onRequestFinished(err, response, body, resolve, reject, options) {
     if (err) {
         handleError(err, reject);
         reject(err);
     } else {
-        const result = options.type === 'forecast' ? getDaysForecast(body.list) : body;
+        const result = options.type === 'forecast' ? Utils.getDaysForecast(body.list) : body;
         resolve(result);
     }
 }
@@ -36,8 +15,9 @@ function handleError(err, reject) {
     reject(err);
 }
 
-function weatherForCity(geocodeData, forecastApiKey, options = {}) {
-    options.type = options.type || 'forecast';
+function weatherForCity(geocodeData, forecastApiKey, options) {
+    options = Utils.getDefaultOptions(options);
+    Utils.checkOptions(options);
     const reqOpts = {
         url: `http://api.openweathermap.org/data/2.5/${options.type}?lat=${geocodeData.lat}&lon=${geocodeData.lng}&units=metric&APPID=${forecastApiKey}`,
         json: true,
