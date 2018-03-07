@@ -14,8 +14,9 @@ The same format must be provided if you use this as a package.
     const weatherApp = require('@nomercy235/weather-app');
 
     // address: string
-    // keys: { googleApiKey: string, forecastApiKey: string } 
-    weatherApp.getWeatherForAddress(address, keys)
+    // keys: { googleApiKey: string, forecastApiKey: string }
+    // options: { type: 'weather' | 'forecast' }  
+    weatherApp.getWeatherForAddress(address, keys, options)
 
 ## Tests
 
