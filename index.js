@@ -33,6 +33,12 @@ if (runningAsScript) {
                 demand: false,
                 describe: 'Overwrite the runningAsScript value.',
                 default: true
+            },
+            type: {
+                alais: 't',
+                demand: true,
+                describe: 'Choose from `weather` or `forecast`.',
+                default: 'weather'
             }
         })
         .help()
@@ -50,11 +56,11 @@ function handlerError(err) {
     }
 }
 
-function getWeatherForAddress(address, keys) {
+function getWeatherForAddress(address, keys, options = {}) {
     return geocode.geocodeAddress(address, keys.googleApiKey)
         .then((geocodeData) => {
             if (runningAsScript) console.log(JSON.stringify(geocodeData, null, 4));
-            return weather.weatherForCity(geocodeData, keys.forecastApiKey).then((data) => {
+            return weather.weatherForCity(geocodeData, keys.forecastApiKey, options).then((data) => {
                 if (runningAsScript) console.log(JSON.stringify(data, null, 4));
                 const result = {
                     geocode: geocodeData,
@@ -71,7 +77,7 @@ if (runningAsScript) {
         googleApiKey: env.googleApiKey,
         forecastApiKey: env.forecastApiKey,
     };
-    getWeatherForAddress(argv.address, keys);
+    getWeatherForAddress(argv.address, keys, argv);
 }
 
 module.exports = {
