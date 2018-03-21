@@ -1,6 +1,7 @@
 const fs = require('fs');
 const geocode = require('./geocode/geocode');
 const weather = require('./weather/weather');
+const Utils = require('./weather/utils');
 
 // To be used if this is ran as a script;
 let yargs;
@@ -57,6 +58,8 @@ function handlerError(err) {
 }
 
 function getWeatherForAddress(address, keys, options = {}) {
+    options = Utils.getDefaultOptions(options);
+    Utils.checkOptions(options);
     return geocode.geocodeAddress(address, keys.googleApiKey)
         .then((geocodeData) => {
             if (runningAsScript) console.log(JSON.stringify(geocodeData, null, 4));

@@ -15,7 +15,7 @@ The same format must be provided if you use this as a package.
 
     // address: string
     // keys: { googleApiKey: string, forecastApiKey: string }
-    // options: { type: 'weather' | 'forecast' }  
+    // options: { type: 'weather' | 'forecast', limit: number }  
     weatherApp.getWeatherForAddress(address, keys, options)
 
 ## Tests
