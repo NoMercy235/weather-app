@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "deploy": "rm -rf dist/ && mkdir dist/ && cp -R {package.json,index.js,weather/,geocode/,.gitignore,README.md} dist",
+    "deploy": "rm -rf dist/ && mkdir dist/ && cpx \"{package.json,index.js,weather/**/*,geocode/**/*,.gitignore,README.md}\" dist",
     "package": "npm run deploy && npm publish --access public dist/"
   },
   "author": "Alexandru Florian Barascu <alex.florin2352@gmail.com>",
@@ -16,6 +16,7 @@
     "yargs": "^4.8.1"
   },
   "devDependencies": {
+    "cpx": "^1.5.0",
     "hoek": "^4.2.1"
   },
   "repository": {
