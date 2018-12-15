@@ -3,16 +3,11 @@ const Utils = require('./utils');
 
 function onRequestFinished(err, response, body, resolve, reject, options) {
     if (err) {
-        handleError(err, reject);
-        reject(err);
+        reject(`Error on weatherForCity request: ${err}`);
     } else {
         const result = options.type === 'forecast' ? Utils.getDaysForecast(body.list, options.limit) : body;
         resolve(result);
     }
-}
-
-function handleError(err, reject) {
-    reject(err);
 }
 
 function weatherForCity(geocodeData, forecastApiKey, options) {

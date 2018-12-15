@@ -3,10 +3,9 @@ const request = require('request');
 function onRequestFinished(err, response, body, resolve, reject) {
     if (err) {
         handleError(err, reject);
-        reject(err);
         return;
     } else if (!body.results.length) {
-        handleNoResults(reject);
+        handleNoResults(address, reject);
         return;
     }
     resolve({
@@ -17,11 +16,11 @@ function onRequestFinished(err, response, body, resolve, reject) {
 }
 
 function handleError(err, reject) {
-    reject(err);
+    reject(`Error on geocode request: ${err}`);
 }
 
-function handleNoResults(reject) {
-    reject('No results found');
+function handleNoResults(address, reject) {
+    reject(`No results found for address "${address}"`);
 }
 
 function geocodeAddress(address, googleApiKey) {
