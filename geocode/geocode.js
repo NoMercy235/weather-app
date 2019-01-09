@@ -1,6 +1,6 @@
 const request = require('request');
 
-function onRequestFinished(err, response, body, resolve, reject) {
+function onRequestFinished(err, response, body, address, resolve, reject) {
     if (err) {
         handleError(err, reject);
         return;
@@ -31,7 +31,7 @@ function geocodeAddress(address, googleApiKey) {
     };
     return new Promise((resolve, reject) => {
         request(reqOpts, (err, response, body) => {
-            onRequestFinished(err, response, body, resolve, reject);
+            onRequestFinished(err, response, body, address, resolve, reject);
         });
     });
 }
